@@ -1,5 +1,6 @@
-# http://xml.coverpages.org/country3166.html
+from django.conf import settings
 
+# http://xml.coverpages.org/country3166.html
 ALL_COUNTRY_CODES = getattr(settings, 'ALL_COUNTRY_CODES', [
     "AD","AE","AF","AG","AI","AL","AM","AO",
     "AQ","AR","AS","AT","AU","AW","AZ","BA",
@@ -32,5 +33,5 @@ ALL_COUNTRY_CODES = getattr(settings, 'ALL_COUNTRY_CODES', [
     "VU","WF","WS","YE","YT","ZA","ZM","ZW"
 ])
 
-PRIORITY_COUNTRY_CODES = getattr(settings, 'PRIORITY_COUNTRY_CODES')
+PRIORITY_COUNTRY_CODES = getattr(settings, 'PRIORITY_COUNTRY_CODES', [])
 
