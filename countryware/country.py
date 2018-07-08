@@ -16,4 +16,4 @@ class Country(TranslationMixin):
         self.priority = defs.PRIORITY_COUNTRY_CODES
 
 
-country = Country(prefix="ISO_3166-1.", codes=defs.COUNTRY_CODES)
+country = Country(prefix="ISO_3166-1.", codes=defs.ALL_COUNTRY_CODES)
