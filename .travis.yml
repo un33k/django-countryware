@@ -6,8 +6,6 @@ python:
   - "3.6"
   - "3.5"
   - "3.4"
-  - "2.7"
-  - "pypy"
   - "pypy3"
 
 env:
@@ -18,19 +16,7 @@ install:
   - pip install $DJANGO
   - pip install -e .
   - pip install pycodestyle
-  - pip install https://github.com/un33k/pyflakes/tarball/master
   - pip install coveralls
-
-before_script:
-  - "pycodestyle --exclude=migrations,tests --ignore=E501,E241,E225,E128 ."
-  - if [[ $TRAVIS_PYTHON_VERSION == '2.7' ]]; then pyflakes -x W countryware; fi
-
-matrix:
-  exclude:
-   - python: "2.7"
-     env: DJANGO="django==2.0.7"
-   - python: "pypy"
-     env: DJANGO="django==2.0.7"
 
 script: coverage run --source=countryware manage.py test
 

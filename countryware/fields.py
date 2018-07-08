@@ -8,7 +8,7 @@ class CountryField(models.CharField):
     def __init__(self, *args, **kwargs):
         kwargs.setdefault('max_length', 2)
         kwargs.setdefault('choices', defs.COUNTRY_CODES)
-        super(CharField, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def get_internal_type(self):
         return "CharField"
