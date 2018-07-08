@@ -1,9 +1,12 @@
+import time
+
 from django.test import TestCase
 from django.conf import settings
 from django.utils import translation
 from django.core.management import call_command
 
 from countryware.country import country
+
 
 class TestCountryCase(TestCase):
     """
