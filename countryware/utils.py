@@ -63,17 +63,17 @@ class TranslationMixin(object):
             self._translated_tuples[self.language] = priority + sorted
         return self._translated_tuples[self.language]
 
-    def get_translations(self, codes):
+    def get_translations(self, codes=None):
         """ Returns a list of (code, translation) tuples for codes  """
         codes = codes or self.codes
         return self._get_priority_translations(priority, codes)
 
-    def get_translations_sorted(self, codes):
+    def get_translations_sorted(self, codes=None):
         """ Returns a sorted list of (code, translation) tuples for codes  """
         codes = codes or self.codes
         return self._get_priority_translations(priority, codes)
 
-    def get_priority_translations(self, priority, codes):
+    def get_priority_translations(self, priority=None, codes=None):
         """ Returns a list of (code, translation) tuples for priority, codes  """
         priority = priority or self.priority
         codes = codes or self.codes
