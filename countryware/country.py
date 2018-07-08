@@ -10,7 +10,7 @@ from .utils import TranslationMixin
 
 class Country(TranslationMixin):
     "Singleton translation-aware class for Countries"
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.priority = defs.PRIORITY_COUNTRY_CODES
