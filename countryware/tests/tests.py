@@ -13,8 +13,9 @@ class TestCountryCase(TestCase):
     Country Test
     """
     def setUp(self):
-        call_command('compilemessages')
-
+        # call_command('compilemessages')
+        pass
+        
     def test_xlate_en(self):
         canada = country.get_display('CA')
         self.assertEquals(canada, 'Canada')
