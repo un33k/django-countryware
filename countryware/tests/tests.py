@@ -58,21 +58,3 @@ class TestCountryCase(TestCase):
         translation.activate('fa')
         countries = get_all_countries_prioritized()
         self.assertEquals(countries[0][1], 'کانادا')
-
-
-    # def test_xlate_zh_hans(self):
-    #     translation.activate('he')
-    #     countries = get_all_countries()
-    #     self.assertEquals(countries[0][1], 'אנדורה')
-
-    # def test_xlate_priority(self):
-    #     translation.activate('zh_Hans')
-    #     countries = get_countries_prioritized()
-    #     self.assertEquals(countries[0][1], '安道尔')
-
-    # def test_xlate_priority(self):
-    #     translation.activate('en')
-    #     countries = country.get_priority_translations()
-    #     self.assertEquals(countries[0][1], 'Canada')
-    #     self.assertEquals(countries.count(('CA', 'Canada')), 1)
-
