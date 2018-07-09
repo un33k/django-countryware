@@ -32,13 +32,12 @@ How to use
 
    ```python
     # In a models.py
-    from countryware.utils.country import country
+    from countryware.utils.country import get_all_countries_prioritized
     from countryware.fields import CountryField
 
     country = CountryField(
         _("Country"),
-        choices=country.get_priority_translations(),
-
+        choices=get_all_countries_prioritized(),
    ```
 
 Advanced users:
