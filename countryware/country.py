@@ -20,7 +20,7 @@ def get_display(code):
 
 def get_countries(codes):
     """ Returns a list of (code, translation) tuples for codes  """
-    countries = [(code, _('ISO_3166-1.' + code)) for code in codes]
+    countries = [(code, get_display(code)) for code in codes]
     return countries
 
 
