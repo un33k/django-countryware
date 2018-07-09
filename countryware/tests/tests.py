@@ -35,7 +35,7 @@ class TestCountryCase(TestCase):
         self.assertEquals(name, 'אנדורה')
 
     def test_xlate_priority(self):
-        translation.activate('zh_Hans')
+        translation.activate('zh-hans')
         name = get_display('AD')
         self.assertEquals(name, '安道尔')
 
