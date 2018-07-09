@@ -1,3 +1,9 @@
+## 0.0.3
+
+Enhacement:
+
+  - Add support for cache backend
+
 ## 0.0.2
 
 Enhacement:

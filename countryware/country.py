@@ -7,9 +7,9 @@ from django.utils.translation import ugettext as _
 from . import defaults as defs
 from .utils import memorize
 
-_cache_all_countries = {}
-_cache_all_countries_sorted = {}
-_cache_all_countries_prioritized = {}
+_cache_countries = {}
+_cache_countries_sorted = {}
+_cache_countries_sorted_prioritized = {}
 
 
 def get_display(code):
@@ -20,18 +20,18 @@ def get_display(code):
 
 def get_countries(codes):
     """ Returns a list of (code, translation) tuples for codes  """
-    countries = [(code, _('ISO_3166-1.' + code)) for code in codes]
+    countries = [(code, get_display(code)) for code in codes]
     return countries
 
 
-@memorize(_cache_all_countries)
+@memorize(_cache_countries)
 def get_all_countries(codes=defs.ALL_COUNTRY_CODES):
     """ Returns a list of (code, translation) tuples for all country codes  """
     countries = get_countries(codes)
     return countries
 
 
-@memorize(_cache_all_countries_sorted)
+@memorize(_cache_countries_sorted)
 def get_all_countries_sorted(codes=defs.ALL_COUNTRY_CODES):
     """ Returns a list of (code, translation) tuples for all country codes  """
     countries = sorted(
@@ -41,7 +41,7 @@ def get_all_countries_sorted(codes=defs.ALL_COUNTRY_CODES):
     return countries
 
 
-@memorize(_cache_all_countries_prioritized)
+@memorize(_cache_countries_sorted_prioritized)
 def get_all_countries_prioritized(
         priority_codes=defs.PRIORITY_COUNTRY_CODES,
         codes=defs.ALL_COUNTRY_CODES
