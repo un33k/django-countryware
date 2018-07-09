@@ -1,3 +1,5 @@
+import inspect
+
 from django.core.cache import cache
 from django.utils import translation
 from django.utils.translation import ugettext as _
@@ -32,15 +34,21 @@ def set_to_cache(backend, key, value):
         backend[key] = value
 
 
+def get_cache_key(backend):
+    lang = translation.get_language()
+    key = '{}-{}'.format(id(backend), lang)
+    return key
+
+
 def memorize(cache_storage):
     def decorator(function):
         def wrapper(*args, **kwargs):
             check_cache()
-            lang = translation.get_language()
-            result = get_from_cache(cache_storage, lang)
+            key = get_cache_key(cache_storage)
+            result = get_from_cache(cache_storage, key)
             if result is None:
                 result = function(*args, **kwargs)
-                set_to_cache(cache_storage, lang, result)
+                set_to_cache(cache_storage, key, result)
             return result
         return wrapper
     return decorator
