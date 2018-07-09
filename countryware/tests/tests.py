@@ -5,7 +5,10 @@ from django.conf import settings
 from django.utils import translation
 from django.core.management import call_command
 
-from countryware.country import country
+from countryware.country import get_all_countries
+from countryware.country import get_all_countries_sorted
+from countryware.country import get_all_countries_prioritized
+from countryware.country import get_display
 from countryware import defaults as defs
 
 
@@ -15,25 +18,61 @@ class TestCountryCase(TestCase):
     """
     def setUp(self):
         # call_command('compilemessages')
-        pass
-        
-    def test_xlate_en(self):
-        canada = country.get_display('CA')
-        self.assertEquals(canada, 'Canada')
+        self.andorra = defs.ALL_COUNTRY_CODES[0]
+
+    def test_xlate_display(self):
+        name = get_display('AD')
+        self.assertEquals(name, 'Andorra')
 
     def test_xlate_fa(self):
         translation.activate('fa')
-        canada = country.get_display('CA')
-        self.assertEquals(canada, 'کانادا')
+        name = get_display('AD')
+        self.assertEquals(name, 'آندورا')
 
-    def test_xlate_zh_Hans(self):
-        translation.activate('zh_Hans')
-        canada = country.get_display('CA')
-        self.assertEquals(canada, '加拿大')
+    def test_xlate_fa(self):
+        translation.activate('he')
+        name = get_display('AD')
+        self.assertEquals(name, 'אנדורה')
 
     def test_xlate_priority(self):
+        translation.activate('zh_Hans')
+        name = get_display('AD')
+        self.assertEquals(name, '安道尔')
+
+    def test_xlate_en_unsorted(self):
         translation.activate('en')
-        countries = country.get_priority_translations()
+        countries = get_all_countries()
+        self.assertEquals(countries[0][1], 'Andorra')
+
+    def test_xlate_en_sorted(self):
+        translation.activate('en')
+        countries = get_all_countries_sorted()
+        self.assertEquals(countries[0][1], 'Afghanistan')
+
+    def test_xlate_en_prioritized(self):
+        translation.activate('en')
+        countries = get_all_countries_prioritized()
         self.assertEquals(countries[0][1], 'Canada')
-        # self.assertEquals(countries.count(('CA', 'Canada')), 1)
+
+    def test_xlate_fa_prioritized(self):
+        translation.activate('fa')
+        countries = get_all_countries_prioritized()
+        self.assertEquals(countries[0][1], 'کانادا')
+
+
+    # def test_xlate_zh_hans(self):
+    #     translation.activate('he')
+    #     countries = get_all_countries()
+    #     self.assertEquals(countries[0][1], 'אנדורה')
+
+    # def test_xlate_priority(self):
+    #     translation.activate('zh_Hans')
+    #     countries = get_countries_prioritized()
+    #     self.assertEquals(countries[0][1], '安道尔')
+
+    # def test_xlate_priority(self):
+    #     translation.activate('en')
+    #     countries = country.get_priority_translations()
+    #     self.assertEquals(countries[0][1], 'Canada')
+    #     self.assertEquals(countries.count(('CA', 'Canada')), 1)
 
