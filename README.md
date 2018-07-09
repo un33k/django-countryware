@@ -38,6 +38,7 @@ How to use
     country = CountryField(
         _("Country"),
         choices=get_all_countries_prioritized(),
+    )
    ```
 
 Advanced users:
