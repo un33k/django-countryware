@@ -6,6 +6,7 @@ from django.utils import translation
 from django.core.management import call_command
 
 from countryware.country import country
+from countryware import defaults as defs
 
 
 class TestCountryCase(TestCase):
@@ -29,3 +30,10 @@ class TestCountryCase(TestCase):
         translation.activate('zh_Hans')
         canada = country.get_display('CA')
         self.assertEquals(canada, '加拿大')
+
+    def test_xlate_priority(self):
+        translation.activate('en')
+        countries = country.get_priority_translations()
+        self.assertEquals(countries[0][1], 'Canada')
+        # self.assertEquals(countries.count(('CA', 'Canada')), 1)
+
