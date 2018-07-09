@@ -47,8 +47,8 @@ def get_all_countries_prioritized(
         codes=defs.ALL_COUNTRY_CODES
     ):
     """ Returns a sorted list of (code, translation) tuples for codes  """
-    countries = get_all_countries(codes)
+    prioritized = []
     if (priority_codes and len(priority_codes) > 0):
         prioritized = get_countries(priority_codes)
-        prioritized = prioritized + countries
-    return prioritized
+    countries = get_all_countries(codes)
+    return prioritized + countries
