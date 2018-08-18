@@ -1,5 +1,3 @@
-import inspect
-
 from django.core.cache import cache
 from django.utils import translation
 from django.utils.translation import ugettext as _
