@@ -49,8 +49,7 @@ class Command(BaseCommand):
                 Country.objects.all().delete()
                 self.stdout.write('countries deleted from db.')
 
-        language = getattr(settings, 'LANGUAGE_CODE', 'en')
-        activate(language)
+        activate(defs.DEFAULT_LANGUAGE_CODE)
         new_count, update_count = 0, 0
         for code in defs.ALL_COUNTRY_CODES:
             created = False

@@ -1,5 +1,7 @@
 from django.conf import settings
 
+DEFAULT_LANGUAGE_CODE = getattr(settings, 'DEFAULT_LANGUAGE_CODE', 'en')
+
 # http://xml.coverpages.org/country3166.html
 ALL_COUNTRY_CODES = getattr(settings, 'ALL_COUNTRY_CODES', [
     "AD", "AE", "AF", "AG", "AI", "AL", "AM", "AO",
