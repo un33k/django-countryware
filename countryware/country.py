@@ -1,4 +1,5 @@
 import locale
+import functools
 
 from django.utils import translation
 from django.utils.translation import ugettext as _
