@@ -4,6 +4,7 @@ from django.core.cache import cache
 from django.utils import translation
 from django.utils.translation import ugettext as _
 
+_cache_countries = {}
 _cache_backend_enabled = None
 
 
@@ -21,38 +22,26 @@ def check_cache():
             _cache_backend_enabled = False
 
 
-def get_from_cache(backend, key):
+def get_from_cache(key):
     """ get value for key from cache """
+    check_cache()
     if _cache_backend_enabled is True:
         return cache.get(key)
-    return backend.get(key)
+    return _cache_countries.get(key)
 
 
-def set_to_cache(backend, key, value):
+def set_to_cache(key, value):
     """ set value for key to cache """
+    check_cache()
     if _cache_backend_enabled is True:
         cache.set(key, value)
     else:
-        backend[key] = value
+        _cache_countries[key] = value
 
 
-def get_cache_key(backend):
+def get_cache_key(codes, sorted=False):
     """ get cache key for operation """
+    unique = hash(tuple(codes))
     lang = translation.get_language()
-    key = '{}-{}'.format(id(backend), lang)
+    key = '{}-{}-{}'.format(unique, lang, sorted)
     return key
-
-
-def memorize(cache_storage):
-    """ decorator to cache operation """
-    def decorator(function):
-        def wrapper(*args, **kwargs):
-            check_cache()
-            key = get_cache_key(cache_storage)
-            result = get_from_cache(cache_storage, key)
-            if result is None:
-                result = function(*args, **kwargs)
-                set_to_cache(cache_storage, key, result)
-            return result
-        return wrapper
-    return decorator
