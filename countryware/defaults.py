@@ -1,6 +1,6 @@
 from django.conf import settings
 
-DEFAULT_LANGUAGE_CODE = getattr(settings, 'DEFAULT_LANGUAGE_CODE', 'en')
+DEFAULT_COUNTRY_LANGUAGE_CODE = getattr(settings, 'DEFAULT_COUNTRY_LANGUAGE_CODE', 'en')
 
 # http://xml.coverpages.org/country3166.html
 ALL_COUNTRY_CODES = getattr(settings, 'ALL_COUNTRY_CODES', [
