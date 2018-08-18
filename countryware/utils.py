@@ -25,7 +25,7 @@ def check_cache():
 def get_from_cache(key):
     """ get value for key from cache """
     check_cache()
-    if _cache_backend_enabled is True:
+    if _cache_backend_enabled:
         return cache.get(key)
     return _cache_countries.get(key)
 
@@ -33,7 +33,7 @@ def get_from_cache(key):
 def set_to_cache(key, value):
     """ set value for key to cache """
     check_cache()
-    if _cache_backend_enabled is True:
+    if _cache_backend_enabled:
         cache.set(key, value)
     else:
         _cache_countries[key] = value
