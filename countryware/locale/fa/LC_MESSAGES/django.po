@@ -543,7 +543,7 @@ msgid "ISO_3166-1.IQ#official"
 msgstr "جمهوری عراق"
 
 msgid "ISO_3166-1.IR"
-msgstr "ایران، جمهوری اسلامی"
+msgst "یران"
 
 msgid "ISO_3166-1.IR#official"
 msgstr "جمهوری اسلامی ایران"
