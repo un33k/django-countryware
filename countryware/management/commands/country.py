@@ -21,11 +21,20 @@ class Command(BaseCommand):
     help = 'Load Country data'
     def add_arguments(self, parser):
         parser.add_argument(
-            '-f', '--flush',
+            '--flush',
             dest='flush',
             default=False,
             action='store_true',
             help='delete all existing countries in db'
+        )
+
+        parser.add_argument(
+            '-l',
+            '--load',
+            dest='load',
+            action='store_true',
+            default=False,
+            help='Load currencies from data file'
         )
 
         parser.add_argument(
@@ -41,14 +50,26 @@ class Command(BaseCommand):
 
         overwrite = options['overwrite']
         flush = options['flush']
+        load = options['load']
         
+        if not (flush or load):
+            self.print_help("", subcommand='country')
+            return
+            
         if flush:
-            self.stdout.write('You are about to delete all countries from db')
-            confirm = input('Are you sure? [yes/no]: ')
-            if confirm == 'yes':
-                Country.objects.all().delete()
-                self.stdout.write('countries deleted from db.')
+            self.flush()
 
+        if load:
+            self.load(overwrite)
+
+    def flush(self):
+        self.stdout.write('You are about to delete all countries from db')
+        confirm = input('Are you sure? [yes/no]: ')
+        if confirm == 'yes':
+            Country.objects.all().delete()
+            self.stdout.write('countries deleted from db.')
+
+    def load(self, overwrite):
         activate(defs.DEFAULT_COUNTRY_LANGUAGE_CODE)
         new_count, update_count = 0, 0
         for code in defs.ALL_COUNTRY_CODES:
