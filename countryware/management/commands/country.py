@@ -93,10 +93,10 @@ class Command(BaseCommand):
             self.stdout.write('Preparing country file ...')
 
         fp = codecs.open(path, encoding='utf-8')
-        self.data = json.load(fp)
+        data = json.load(fp)
 
         new_count, update_count = 0, 0
-        for country in self.data:
+        for country in data:
             created = False
             defaults = {
                 'code': country.get('alpha2Code'),
