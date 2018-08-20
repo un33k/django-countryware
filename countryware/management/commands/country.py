@@ -19,7 +19,17 @@ logger = logging.getLogger(__name__)
 class Command(BaseCommand):
     # Note: admin:skip
     help = 'Load Country data'
+    path = os.path.abspath(os.path.join(os.path.realpath(__file__), '../../../', 'country.json'))
+
     def add_arguments(self, parser):
+        parser.add_argument(
+            '-p',
+            '--path',
+            dest='path',
+            default=self.path,
+            help='Path to a json country file.'
+        )
+
         parser.add_argument(
             '--flush',
             dest='flush',
@@ -34,7 +44,7 @@ class Command(BaseCommand):
             dest='load',
             action='store_true',
             default=False,
-            help='Load currencies from data file'
+            help='Load countries from data file'
         )
 
         parser.add_argument(
@@ -46,8 +56,8 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        verbosity = options['verbosity']
-
+        self.verbosity = options['verbosity']
+        path = options['path']
         overwrite = options['overwrite']
         flush = options['flush']
         load = options['load']
@@ -60,7 +70,7 @@ class Command(BaseCommand):
             self.flush()
 
         if load:
-            self.load(overwrite)
+            self.load(path, overwrite)
 
     def flush(self):
         self.stdout.write('You are about to delete all countries from db')
@@ -69,15 +79,32 @@ class Command(BaseCommand):
             Country.objects.all().delete()
             self.stdout.write('countries deleted from db.')
 
-    def load(self, overwrite):
+    def load(self, path, overwrite):
+            
+        if not os.path.isfile(path):
+            self.stdout.write('No country file found at path')
+            self.stdout.write(path)
+            self.print_help("", subcommand='country')
+            return
+
         activate(defs.DEFAULT_COUNTRY_LANGUAGE_CODE)
+
+        if self.verbosity > 2:
+            self.stdout.write('Preparing country file ...')
+
+        fp = codecs.open(path, encoding='utf-8')
+        self.data = json.load(fp)
+
         new_count, update_count = 0, 0
-        for code in defs.ALL_COUNTRY_CODES:
+        for country in self.data:
             created = False
             defaults = {
-                'code': code,
-                'name': get_display(code),
+                'code': country.get('alpha2Code'),
             }
+            if defs.DEFAULT_COUNTRY_LANGUAGE_CODE == 'en':
+                defaults['name'] = country.get('name')
+            else:
+                defaults['name'] = get_display(country.get('alpha2Code'))
             if overwrite:
                 instance, created = Country.objects.get_or_create_unique(defaults, ['code'])
             else:
@@ -90,5 +117,5 @@ class Command(BaseCommand):
             elif overwrite:
                 update_count += 1
         
-        self.stdout.write('Created {count} currenies'.format(count=new_count))
-        self.stdout.write('Updated {count} currenies'.format(count=update_count))
+        self.stdout.write('Created {count} countries'.format(count=new_count))
+        self.stdout.write('Updated {count} countries'.format(count=update_count))
