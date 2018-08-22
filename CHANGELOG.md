@@ -1,3 +1,9 @@
+## 0.0.4
+
+Enhancement:
+
+  - Include locale directory
+
 ## 0.0.3
 
 Enhacement:
