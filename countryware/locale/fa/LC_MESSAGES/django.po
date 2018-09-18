@@ -22,9 +22,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: Persian\n"
-"X-Poedit-Country: IRAN, ISLAMIC REPUBLIC OF\n"
-"X-Poedit-SourceCharset: utf-8\n"
 
 msgid "ISO_3166-1.AD"
 msgstr "آندورا"
@@ -543,7 +540,7 @@ msgid "ISO_3166-1.IQ#official"
 msgstr "جمهوری عراق"
 
 msgid "ISO_3166-1.IR"
-msgst "ایران"
+msgstr "ایران"
 
 msgid "ISO_3166-1.IR#official"
 msgstr "جمهوری اسلامی ایران"
